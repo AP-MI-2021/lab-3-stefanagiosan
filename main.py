@@ -116,6 +116,7 @@ def get_longest_prime_digits(l):
                 subsecventaMax = l[i:j + 1]
     return subsecventaMax
 
+
 def test_get_longest_prime_digits():
     assert get_longest_prime_digits([34,56,78,333,2,55,89,106]) == [333,2,55]
     assert get_longest_prime_digits([2]) == [2]
@@ -123,13 +124,45 @@ def test_get_longest_prime_digits():
     assert get_longest_prime_digits([12,45,67,23]) == [23]
 
 
+def numerePrime(l):
+    '''
+    verifica daca toate numerele unei liste sunt formate din cifre prime
+    :param l: lista verificata
+    :return: returneaza True daca toate numerle au doar cifre prime, iar false in caz contrar
+    '''
+    for n in l:
+        if isPrime(n) == False:
+            return False
+    return True
+
+
+def get_longest_all_primes(l):
+    '''
+    returneaza cea mai lunga secvemta in care toate numerele sunt prime
+    :param l: lista din care se citesc numerele
+    :return: subsecventa
+    '''
+    subsecventaMax = []
+    for i in range(len(l)):
+        for j in range(i, len(l)):
+            if numerePrime(l[i:j + 1]) and len(l[i:j + 1]) > len(subsecventaMax):
+                subsecventaMax = l[i:j + 1]
+    return subsecventaMax
+
+def test_get_longest_all_primes():
+    assert get_longest_all_primes([11,2,3,7,8,9,6,5]) == [11,2,3,7]
+    assert get_longest_all_primes([22,24,56,11,7,3,2]) == [11,7,3,2]
+    assert get_longest_all_primes([34]) == []
+
+
+
 
 def printMenu():
     print("1. Citire lista")
     print("2. Afisare cea mai lunga subsecventa de numere consecutive ce au semne alternate")
     print("3. Afisare cea mai lunga subsecventa de numere ce contin doar cifre prime")
-    print("4. Iesire")
-
+    print("4. Afisare cea mai lunga subsecventa formata doar din numere prime")
+    print("5. Iesire")
 
 
 def citireLista():
@@ -143,6 +176,7 @@ def citireLista():
 def main():
     TestDoarCifrePrime()
     test_get_longest_prime_digits()
+    test_get_longest_all_primes()
     l = []
     while True:
         printMenu()
@@ -154,6 +188,8 @@ def main():
         elif optiune == "3":
             print(get_longest_prime_digits(l))
         elif optiune == "4":
+            print(get_longest_all_primes(l))
+        elif optiune == "5":
             break
         else:
             print("Optiune gresita! Reincercati!")
